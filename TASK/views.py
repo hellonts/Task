@@ -462,14 +462,14 @@ def messages(request):
 
 
     return render_to_response('admin_messages.html', RequestContext(request, locals()))
-@login_required
-def jiankong(request):
-    from subprocess import Popen, PIPE
-    cmd = "uptime |cut -c '45-61'"
-    p = Popen(cmd , shell=True, stdout=PIPE, stderr=PIPE)
-    out, err = p.communicate()
-    out = simplejson.dumps(out).split()
-    return HttpResponse(out, mimetype='application/javascript')
+#@login_required
+#def jiankong(request):
+#    from subprocess import Popen, PIPE
+#    cmd = "uptime |cut -c '45-61'"
+#    p = Popen(cmd , shell=True, stdout=PIPE, stderr=PIPE)
+#    out, err = p.communicate()
+#    out = simplejson.dumps(out).split()
+#    return HttpResponse(out, mimetype='application/javascript')
 
 
 
