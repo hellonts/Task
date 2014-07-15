@@ -1,0 +1,201 @@
+{% extends "baseadmin.html" %}
+{% load url from future %}
+<html>
+  <head>
+	{% block head %} {% endblock %}
+  </head>
+  <body>
+   {% block content %}
+   {% endblock %}
+	{% block files %}
+	
+	
+
+	{% if perms.auth.change_user %}
+		<form action="" method='post'>{% csrf_token %}
+		<ol class="breadcrumb">
+                <li><a href="/TASK/admin/index/">Home</a></li>
+                <li><a href="#">修改用户</a></li>
+                <li class="active">Data</li>
+
+           </ol>
+		<table class="table table-condensed">
+		<thead>
+		<th class="col-xs-1"></th>
+		<th></th>
+		<th></th>
+		
+		</thead>
+		<tbody>
+		<tr>
+		<td class="col-xs-2">{{form.username.label}}{{is_staff}}{{is_active}}</td>
+		<td class="col-xs-3">{{form.username}}</td>
+		<td class="col-xs-6">{{form.username.errors}}</td>
+		</tr>
+		<tr>
+                <td class="col-xs-2">{{form.password.label}}</td>
+                <td class="col-xs-3"><input class="form-control" type="txte" id="testt" rel="tooltip" title="显示密码为加密字段，如需修改密码点击右边." value="{{user.password|slice:"25"}}..." ></td>
+                <td class="col-xs-6">&nbsp; &nbsp; &nbsp; &nbsp;<button type="button" class="btn btn-default btn-sm" id="ex1"><span class="glyphicon glyphicon-pencil"></span> 修改密码</button>{{form.password.errors}}</td>
+                </tr>
+	
+		</tbody>
+		</table>
+
+		
+		<table class="table table-condensed">
+		<thead>
+		<tr>	
+		<th class="col-xs-1">联系方式</th>
+		<th></th>
+		<th></th>
+		</tr>
+		</thead>
+                <tbody>
+                <tr>
+                <td class="col-xs-2" >{{ form.first_name.label }}</td>
+                <td class="col-xs-3" >{{form.first_name}}</td>
+                <td class="col-xs-6">{{form.first_name.errors}}</td>
+                </tr>
+                 <tr>
+                <td class="col-xs-2" >{{ form.last_name.label }}</td>
+                <td class="col-xs-3" >{{ form.last_name }}</td>
+                <td class="col-xs-6">{{ form.last_name.errors }}</td>
+                </tr>
+
+		  <tr>
+                <td class="col-xs-2" >{{ form.email.label }}</td>
+                <td class="col-xs-3" >{{ form.email }}</td>
+                <td class="col-xs-6">{{ form.email.errors }}</td>
+                </tr>
+                </tbody>
+                </table>
+		
+		<table class="table table-condensed">
+                <thead>
+                <tr>
+                <th class="col-xs-1">权限</th>
+                <th></th>
+                <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr >
+                <td class="col-xs-2" >{{ form.is_staff.label }}</td>
+                <td class="col-xs-5" >{{form.is_staff}}</td>
+                <td class="col-xs-4">{{form.is_staff.help_text}}</td>
+                </tr>
+                 <tr>
+                <td class="col-xs-2" >{{ form.is_active.label }}</td>
+                <td class="col-xs-5" >{{ form.is_active }}</td>
+                <td class="col-xs-4">{{ form.is_active.help_text }}</td>
+                </tr>
+
+                  <tr>
+                <td class="col-xs-2" >{{ form.is_superuser.label }}</td>
+                <td class="col-xs-5" >{{ form.is_superuser }}</td>
+                <td class="col-xs-4">{{ form.is_superuser.errors }}</td>
+                </tr>
+		 </tr>
+
+                  <tr>
+                <td class="col-xs-2" >{{ form.user_permissions.label}}</td>
+                <td class="col-xs-6" style="background-color:white">
+		{{ form.user_permissions}}
+		</td>
+		<td class="col-xs-4" ></td>
+                </tr>
+                </tbody>
+                </table>
+		
+		 <table class="table table-condensed">
+                <thead>
+                <tr>
+                <th class="col-xs-1">重要日期</th>
+                <th></th>
+                <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr >
+                <td class="col-xs-2" >{{ form.last_login.label }}</td>
+                <td class="col-xs-2" >{{form.last_login}}</td>
+                <td class="col-xs-7">{{form.last_login.help_text}}</td>
+                </tr>
+		
+		<tr >
+                <td class="col-xs-2" >{{ form.date_joined.label }}</td>
+                <td class="col-xs-2" >{{form.date_joined}}</td>
+                <td class="col-xs-7">{{form.date_joined.help_text}}</td>
+                </tr>
+		<tr>
+		<td class="col-xs-2"><br><button type="submit" class="btn btn-primary btn-sm">保存</button></td>
+		<td class="col-xs-2"></td>
+		<td class="col-xs-7"></td>
+		</tr>
+		</tbody>
+		</table>	
+
+
+	</div>
+	<script>
+	$("#last_login").datetimepicker({
+        format: "yyyy-MM-dd - hh:ii",
+        autoclose: true,
+	language: 'zh-CN',
+        todayBtn: true,
+        pickerPosition: "bottom-left"
+    });	
+		
+        $("#date_joined").datetimepicker({
+        format: "yyyy-MM-dd - hh:ii",
+        autoclose: true,
+        language: 'zh-CN',
+        todayBtn: true,
+        pickerPosition: "bottom-left"
+    }); 
+	</script>
+
+
+
+		
+
+		</form>
+
+
+		<div id="popover-head1" class="hide" >请输入新密码:</div>
+                        <div id="popover-content1" class="hide" >
+                        <div class="container" style="margin: 15px; width: 200px;"class="hide">
+                        <div class="row" style="padding-top: 20px;"class="hide">
+                        <form action=""  method="post"  >{% csrf_token %}
+                                <label for="male">
+                                <td>
+
+
+
+                        <input type="text" name="newpass" class="form-control" placeholder="new password" required><br><button  type="submit"  name="setnewpass"  class="btn btn-default btn-sm">确定</button></form>
+                        </div>
+                        </div>
+                        </div>
+
+
+	{% else %}
+
+	you no have permission
+	
+	{% endif %}
+	
+
+
+
+
+
+
+
+	{% endblock %}
+
+
+	{% block footer %}
+      {% endblock %}
+
+	</body>
+</html>

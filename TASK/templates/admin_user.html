@@ -1,0 +1,131 @@
+{% extends "baseadmin.html" %}
+{% load url from future %}
+<html>
+  <head>
+	{% block head %} {% endblock %}
+  </head>
+  <body>
+   {% block content %}
+   {% endblock %}
+	{% block files %}
+	
+	
+
+	{% if perms.auth.change_user %}
+		<ol class="breadcrumb">
+                <li><a href="/TASK/admin/index/">Home</a></li>
+                <li><a href="#">用户管理</a></li>
+                <li class="active">Data</li>
+
+           </ol>
+
+		{% if pages %}
+                <form action="" method="post" onsubmit="return checkData()">{% csrf_token %}
+                <div class="page">
+                        <table   class="table  table-condensed table-hover table-bordered" >
+                                <thead >
+                                <tr class="active">
+                                <th><input name="checkall1" type="checkbox" value="0" onClick="checkAllBox(this);"/></th>
+                                <th>用户名</th>
+                                <th>姓名</th>
+                                <th>职位</th>
+                                <th>邮箱</th>
+                                <th>是否有效</th>
+                                <th>是否可以登录</th>
+                                <th>是否管理员</th>
+                                <th>最后登录时间</th>
+                                <th></th>
+                                </tr>
+                                </thead>
+                                {% for i in pages %}
+                                <tbody >
+                                <tr >
+
+                                <td>
+                                <label class="checkbox-inline">
+                                <input type="checkbox" id="inlineCheckbox{{i.id}}" name="answer" value="{{i.id}}"></label></td>
+                                <td><h4><a href="{% url 'user_update' i.id  %}" id="{{i.id}}" >{{ i.username }}</a></h4></td>
+                                <td><h4>{{ i.first_name }}</h4> </td>
+                                <td><h4>{{ i.last_name }}</h4></td>
+                                <td><h4>{{ i.email }}</h4></td>
+                                <td><h4>{{ i.is_staff }}</h4></td>
+                                <td><h4>{{ i.is_active }}</h4></td>
+                                <td><h4>{{ i.is_superuser }}</h4></td>
+                                <td><h4>{{ i.last_login|date:"Y-m-d H:s" }}</h4> </td>
+                                <td> </td>
+                                </tr>
+
+
+                                </tbody>
+                                {% endfor %}
+                        </table>
+                </div>
+		<div class="content-toolbar btn-toolbar pull-left clearfix">
+		   {% if perms.auth.add_user %}
+                   <tr class="active"><button  class="btn btn-primary btn-sm" type="button" onclick="{location.href='/TASK/admin/user_add'}"/><span class="glyphicon glyphicon-plus"></span>Add</button></tr>
+			{% endif %}
+		   {% if perms.auth.delete_user %}
+                  <tr class="active"><button id="Button1" name="delete" class="btn btn-danger btn-sm" type="submit"><span class="glyphicon glyphicon-trash"></span> Delete</button></tr>
+			{% endif %}
+                </div>
+                </form>
+                        <ul class="pagination">
+                        <li > {% if pages.has_previous %}
+                        <a href="?page={{ pages.previous_page_number }}">上一页</a>
+                        {% endif %}</li>
+                        <li class="active"><a>第{{ pages.number }}页<span class="sr-only">(current)</span></a></li>
+                        <li><a>共{{ pages.paginator.num_pages }}页</a></li>
+                        <li > {% if pages.has_next %}
+                        <a href="?page={{ pages.next_page_number }}">下一页</a>
+                        {% endif %}</li>
+                        </ul>
+                {% else %}
+                         <div class="alert alert-warning">
+                                <h4> <strong>this group_name is none</strong> please <a href="/Iwork/admin/ipadd/" class="alert-link">ip_add</a></h4></div>
+                {% endif %}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	{% else %}
+
+	you no have permission
+	
+	{% endif %}
+	
+
+
+
+
+
+
+
+	{% endblock %}
+
+
+	{% block footer %}
+      {% endblock %}
+
+	</body>
+</html>

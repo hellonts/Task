@@ -1,0 +1,298 @@
+<html>
+  <head>
+    {% block head %} {% endblock %}
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <meta charset="utf-8" />
+  	<title>Resource Application System</title>{% block title %} {% endblock %} 
+    <!-- Le styles -->
+    <link href="/static/bt3.0.3/css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <link href="/static/bt3.0.3/css/offcanvas.css" type="text/css" rel="stylesheet" />
+    <link href="/static/lou-multi/css/multi-select.css" rel="stylesheet" type="text/css"/> 
+    <link href="/static/jquery/prettify.css" rel="stylesheet" type="text/css"/> 
+    <link href="/static/datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css"/> 
+     <style type="text/css">
+      	.breadcrumb { 
+	list-style: none; 
+	overflow: hidden; 
+	font: 15px Helvetica, Arial, Sans-Serif;
+	}
+	.breadcrumb li { 
+	float: left; 
+	}
+	.ipadd_td_left {
+	font-size: 13px;
+	text-align:right;
+	}
+	.ipadd_td_right{
+	font-size: 13px;
+	text-align:left;
+	
+	}
+	h1,h2,h3,h4{
+		font-weight:normal;
+		font-size:13px;
+	}
+	.table{
+	font-size: 13px;
+	}
+	.server_add{
+	font-size: 13px;width: 50%;float: left;
+	}
+	 .code{
+        display: list-item;
+	text-align: -webkit-match-parent;
+        }
+     </style>
+
+	
+    <script type="text/javascript" src="/static/bt3.0.3/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/jquery/highcharts.js"></script>
+    <script type="text/javascript" src="/static/bt3.0.3/js/bootstrap.js"></script>
+    <!--script type="text/javascript" src="/static/bootstraped/js/bootstraped.min.js"></script-->
+    <script type="text/javascript" src="/static/sco/js/sco.valid.js"></script>
+    <script type="text/javascript" src="/static/sco/js/sco.message.js"></script>
+    <script type="text/javascript" src="/static/sco/js/sco.ajax.js"></script>
+    <script type="text/javascript" src="/static/jquery/jquery.multifile.js"></script>
+    <script type="text/javascript" src="/static/jquery/prettify.js"></script>
+    <script type="text/javascript" src="/static/bt3.0.3/js/transition.js"></script>
+    <script type="text/javascript" src="/static/bt3.0.3/js/tooltip.js"></script>
+    <script type="text/javascript" src="/static/bt3.0.3/js/popover.js"></script>
+    <script type="text/javascript" src="/static/bt3.0.3/js/modal.js"></script>
+    <script type="text/javascript" src="/static/bt3.0.3/js/application.js"></script>
+    <script type="text/javascript" src="/static/lou-multi/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="/static/datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="/static/datetimepicker/bootstrap-datetimepicker.zh-CN.js"charset="UTF-8"></script>
+
+
+
+	{% block script %}
+		<script type="text/javascript">
+		 function checkAllBox(obj){
+        var answer= document.getElementsByName("answer");
+        if(obj.checked==true){
+        for(var i=0;i<answer.length;i++){
+        answer[i].checked = true;
+                        }
+                }else{
+                        for(var i=0;i<answer.length;i++){
+                        answer[i].checked = false;
+                        }
+                        }
+                }
+
+        function checkData(){ 
+        var answer= document.getElementsByName("answer");
+        var flag = false;
+        for(var i=0;i<answer.length;i++){
+        if(answer[i].checked == true){
+        flag = true;
+        break;
+                }
+        }
+        if(!flag){
+                alert("请至少选择一项");
+                return flag;
+                }
+        }
+
+
+
+        $(function(){ 
+        $("#Button1").bind("onclick",function(){ 
+        //this就是当前点击的对象 
+                alert($(this).attr("name")); 
+                }) 
+        })
+
+
+
+
+
+
+
+
+		 function a(){
+                                window.onload = function(){
+                                var arr = document.getElementsByTagName('button');
+                                for(var i = 0;i<arr.length;i++){
+                                        arr[i].onclick = function(){
+                                                //alert(this.id);
+                                                $("#service_name").val(this.id);
+
+                                        }
+                                }
+                        }
+	}	
+
+
+
+
+
+		$('#myModal').modal({
+		  show: false
+			})//模态框
+
+
+
+
+
+
+		 //bootstrap pre_code
+		$(document).ready(function(){
+     		prettyPrint();
+		})
+
+
+
+
+
+
+		 $(function () {
+                var showPopover = function () {
+                    $(this).popover('show');
+                }
+                , hidePopover = function () {
+                    $(this).popover('hide');
+                };
+        $('#ex1').popover({
+                     html : 'true',
+                     title: function() {
+                        return $("#popover-head1").html();
+                        },
+                     content: function() {
+                        return $("#popover-content1").html();
+                        },
+                    trigger: 'click',
+                    placement:'bottom',
+                })
+		});
+
+
+		$(function() {
+     $('.tooltip-demo').tooltip({
+      selector: "[data-toggle=tooltip]",
+      container: "body"
+    })
+    $("#testt").tooltip({})
+    $('a').tooltip()
+})
+
+
+
+
+
+
+	</script>
+{% endblock %}
+
+	
+        <!-- Custom styles for this template -->
+
+    <!--[if lt IE 9]><link href="/static/bt3.0.3/css/offcanvas.css" type="text/css" rel="stylesheet"><![endif]-->
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script type="text/javascript" src="/static/bootstrap3.0.3/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="/static/bootstrap3.0.3/js/html5shiv.js"></script>
+        <script type="text/javascript" src="/static/bootstrap3.0.3/js/respond.min.js"></script>
+
+    <![endif]-->
+
+
+
+
+  </head>
+  <body>
+	
+    <div class="row">
+
+	{% block content %}
+		{% endblock %}
+      <div align="center" class="col-md-3" style="font-size:13px;">
+	<div class="col-md-12">
+        <div class="span3" >
+	  <div class="panel-group" id="accordion" >
+	     {% if perms.auth  %}
+	    <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">用户管理</a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <a href="/TASK/admin/user/" class="success3">用户</a><hr>
+                </div>
+              </div>
+            </div>
+	    {% endif %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">任务系统</a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <a href="/TASK/admin/tasklist/" class="success3">任务列表</a><hr>
+                  <a href="/TASK/admin/taskget/" class="success4">收到的任务</a><hr>
+                  <a href="/TASK/admin/taskpost/" class="success4">发送的任务</a><hr>
+                  <a href="/TASK/admin/taskadd/" class="success4">创建新任务</a><hr>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+	</div>	
+	</div>	
+        <div align="center" class="col-md-9">
+	<div class="col-md-12">	{% block files %} {% endblock %}</div>
+	</div>
+      
+   </div>
+    <hr />
+  {% block footer %}
+  {% endblock %}
+  <div class="row-fluid">
+        <div align="center" class="col-md-12">
+		<footer>
+                  <p>&copy; Company 2014</p>
+                </footer>
+
+		</div>
+   </div>
+    
+
+	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <a class="navbar-brand" href="#">system</a></button>
+        </div>
+        <div class="collapse navbar-collapse">
+         <p class="navbar-text pull-right">Logged in as <a href="#" class="navbar-link">{% if user.is_authenticated %}{{user.username}}{% endif %}</a> &nbsp;&nbsp; <a href="/TASK/admin/messages/"><span class="glyphicon glyphicon-envelope"> </span><span class="badge">{% ifequal message 0 %}{% else %}{{message}} {%endifequal %}</span></a></p>
+          <ul class="nav navbar-nav">
+            <li class="active">
+              <a href="#">Background management center</a>
+            </li>
+            <li>
+              <a href="#about">About</a>
+            </li>
+            <li>
+              <a href="/TASK/login/">logout</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.nav-collapse -->
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /.navbar -->
+
+
+
+  </body>
+</html>

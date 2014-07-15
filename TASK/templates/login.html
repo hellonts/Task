@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block head %} {% endblock %}
+	
+	{% block content %}
+<div class="container-fluid">
+
+	<div class="row-fluid">
+		<div class="span12">
+		</div>
+	</div><hr>
+
+
+
+
+	<div class="row-fluid">
+		<div class="span8" >
+
+
+
+		{% if result %}
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>{{result}}{{cform.email.errors}}</strong>
+                </div>
+                {% endif %}
+		{% if cform.errors%}
+		<div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"></span><span class="sr-only"></span></button>
+		<h3 align="center">表单提交有误,请检查更新.</h3>
+                <strong></strong>
+                </div>
+		{% endif %}
+		</div>
+		<div class="span4">
+			<form class="form-signin" action="" id="validform"  method="post" >
+				{% csrf_token %}
+				<div><h2 class="form-signin-heading">Please sign in</h2>
+					<!--input type="text" name="username" id="id_username" class="input-block-level" placeholder="username" -->
+					<table >
+					<tbody>
+					<tr>
+					<td >{{form.username.label}}</td><td >{{form.username}}</td><td></td></tr>
+					<tr>
+					<td >{{form.password.label}}</td><td >{{form.password}}</td><td></td></tr>
+					</tbody></table>
+					
+					<!--input type="password" name="password" id="id_password" class="input-block-level" placeholder="Password" -->
+						<label class="checkbox">
+							<input type="checkbox" value="remember-me"> Remember me</label>
+					<button class="btn  btn-primary" name="login" type="submit">Sign in</button>
+					<button class="btn  btn-warning" type="button" data-toggle="modal" id="register"data-target="#myModal">Register</button>
+				</div>
+
+
+
+
+			</form>
+
+
+
+			 <div>
+                <form   method="post" action="" >
+                        {% csrf_token %}
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" style="text-align:left">
+                           <div class="modal-content">
+                                        <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">用户注册</h4>
+                                        </div>
+                                <div class="modal-body" >
+		{% if result %}
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                <!--button type="button" class="close" data-dismiss="alert"><a class="close" data-dismiss="alert" href="#">&times;</a></button-->
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+		<strong>{{result}}</strong>
+                </div>
+                {% endif %}
+                                        <!--h4> 注册新用户</h4-->
+					<table class="table">
+					<tbody>
+			<tr><td style="text-align:right">{{cform.username.label}}</td><td>{{cform.username}}</td><td>{{cform.username.errors}}</td></tr>
+			<tr><td style="text-align:right">{{cform.first_name.label}}</td><td>{{cform.first_name}}</td><td>{{cform.first_name.errors}}</td></tr>
+			<tr><td style="text-align:right">{{cform.last_name.label}}</td><td>{{cform.last_name}}</td><td>{{cform.last_name.errors}}</td></tr>
+			<tr><td style="text-align:right">{{cform.email.label}}</td><td>{{cform.email}}</td><td>{{cform.email.errors}}</td></tr>
+			<tr><td style="text-align:right">{{cform.password.label}}</td><td>{{cform.password}}</td><td>{{cform.password.errors}}</td></tr>
+					
+
+					</tbody>
+					</table>
+                                </div>
+                                <div class="modal-footer" >
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                        <button type="submit" name="useradd" class="btn btn-primary" id="btnRefresh" >确定</button>
+
+
+
+
+
+                                </div>
+                           </div>
+                        </div>
+                </div><!-- /.modal -->
+                                </form>
+                </div>
+
+
+
+
+
+
+
+			{% if form.username.errors %}
+			<div class="alert alert-error">
+				{{form.username.errors}}
+
+			</div>
+			{% endif %}
+			 {% if form.password.errors %}
+                        <div class="alert alert-error">
+                                {{form.password.errors}}
+
+                        </div>
+                        {% endif %}
+			{% if password_is_wrong %}
+				<div class="alert alert-error">
+					<h5>错误!用户名或密码不正确</h5>
+				</div>
+			{% endif %}
+			{% if disabled %}
+                                <div class="alert alert-error">
+                                        <h5>该用户已被禁止登录</h5>
+                                </div>
+                        {% endif %}			
+
+
+		</div>
+
+	</div><hr>
+	
+{% endblock %}
+	
+		 {% block footer %}
+		{{ block.super }}
+	<div class="row-fluid">
+		<div class="span4">
+		<footer>
+		  <p>&copy; Company 2014</p>
+		</footer>		
+
+
+		</div>
+		<div class="span4">
+
+
+
+
+
+
+
+
+
+		</div>
+		<div class="span4">
+		</div>
+	</div>
+</div>
+   <!-- /container -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+                                                                                                     
+
+
+        		{% endblock %}

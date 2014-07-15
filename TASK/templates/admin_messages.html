@@ -1,0 +1,108 @@
+{% extends "baseadmin.html" %}
+{% load url from future %}
+<html>
+  <head>
+	{% block head %} {% endblock %}
+  </head>
+  <body>
+   {% block content %}
+   {% endblock %}
+	{% block files %}
+	
+	
+
+	{% if perms.TASK.change_task or perms.TASK.add_task or perms.TASK.delete_task%}
+		<ol class="breadcrumb">
+                <li><a href="/TASK/admin/index/">Home</a></li>
+                <li><a href="#">消息中心</a></li>
+                <li class="active">Data</li>
+
+           </ol>
+
+		{% if pages %}
+                <form action="" method="post" onsubmit="return checkData()">{% csrf_token %}
+                
+	<div align="center" class="col-md-12">
+        <div class="span7" >
+          <div class="panel-group" id="accordiont" >
+		{% for i in pages %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordiont" href="#One{{i.id}}" align="left" style="font-size:13px;"><span class="col-xs-2">{{i.title}}</span><span class="col-xs-2">{{i.message_time|date:"Y-m-d H:s"}}</span><span>来自:{{i.fromuser}}</span></a>
+                </h4>
+              </div>
+              <div id="One{{i.id}}" class="panel-collapse collapse">
+                <div class="panel-body">
+		<p align="left">详细内容：{{i.content}}</p>
+                </div>
+              </div>
+            </div>{% endfor %}<br>
+        </div>
+        </div>
+        </div>
+		<br>
+		</form>
+                        <ul class="pagination">
+                        <li > {% if pages.has_previous %}
+                        <a href="?page={{ pages.previous_page_number }}">上一页</a>
+                        {% endif %}</li>
+                        <li class="active"><a>第{{ pages.number }}页<span class="sr-only">(current)</span></a></li>
+                        <li><a>共{{ pages.paginator.num_pages }}页</a></li>
+                        <li > {% if pages.has_next %}
+                        <a href="?page={{ pages.next_page_number }}">下一页</a>
+                        {% endif %}</li>
+                        </ul>
+                {% else %}
+		<div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>无消息 </strong>
+                </div>
+
+                {% endif %}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	{% else %}
+
+	you no have permission
+	
+	{% endif %}
+	
+
+
+
+
+
+
+
+	{% endblock %}
+
+
+	{% block footer %}
+      {% endblock %}
+
+	</body>
+</html>

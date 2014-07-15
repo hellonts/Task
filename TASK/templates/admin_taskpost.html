@@ -1,0 +1,172 @@
+{% extends "baseadmin.html" %}
+{% load url from future %}
+<html>
+  <head>
+	{% block head %} {% endblock %}
+  </head>
+  <body>
+   {% block content %}
+   {% endblock %}
+	{% block files %}
+	
+	
+
+	{% if perms.TASK.change_task or perms.TASK.add_task or perms.TASK.delete_task%}
+
+		<ol class="breadcrumb">
+                <li><a href="/TASK/admin/index/">Home</a></li>
+                <li><a href="#">任务列表</a></li>
+                <li class="active">Data</li>
+
+           </ol>
+
+
+		{% if pages %}
+                <form action="" method="post" onsubmit="return checkData()">{% csrf_token %}
+                <div class="page">
+                        <table   class="table  table-condensed table-hover table-bordered" >
+                                <thead >
+                                <tr class="active">
+                                <th><input name="checkall1" type="checkbox" value="0" onClick="checkAllBox(this);"/></th>
+                                <th>任务ID</th>
+                                <th>发送者</th>
+                                <th>接收者</th>
+                                <th>紧急状态</th>
+                                <th>任务状态</th>
+                                <th>发布时间</th>
+                                <th>需完成时间</th>
+                                <th>用途</th>
+                                <th>资源状态</th>
+                                <th>备注</th>
+                                </tr>
+                                </thead>
+                                {% for i in pages %}
+                                <tbody >
+                                <tr >
+
+                                <td>
+                                <label class="checkbox-inline">
+                                <input type="checkbox" id="inlineCheckbox{{i.id}}" name="answer" value="{{i.id}}"></label></td>
+                                <td><h4><a href="{% url 'taskprocessing'  i.id  %}" id="{{i.id}}" >{{ i.id }}</a></h4></td>
+                                <td><h4>{{ i.fromuser }}</h4></td>
+                                <td><h4>{{ i.touser }}</h4></td>
+                                <td><h4>
+				 {% ifequal i.demand_status 1 %}
+                		<label class="label label-info">不急</label>
+            			{% endifequal%}
+				{% ifequal i.demand_status 2 %}
+                                <label class="label label-warning">很急</label>
+                                {% endifequal%}
+				{% ifequal i.demand_status 3 %}
+                                <label class="label label-danger">紧急</label>
+                                {% endifequal%}
+
+				</h4></td>
+                                <td><h4>
+				{% ifequal i.task_status 1 %}
+                                <label class="label label-default">等待处理</label>
+                                {% endifequal%}
+                                {% ifequal i.task_status 2 %}
+                                <label class="label label-primary">正待处理</label>
+                                {% endifequal%}
+                                {% ifequal i.task_status 3 %}
+                                <label class="label label-success">处理完成</label>
+                                {% endifequal%}
+
+
+
+
+				</h4> </td>
+                                <td><h4>{{ i.current_time|date:"Y-m-d H:s"}}</h4></td>
+                                <td><h4>{{ i.completion_time|date:"Y-m-d H:s" }}</h4></td>
+                                <td><h4>{{ i.vmusage }}</h4></td>
+                                <td><h4>
+				{% ifequal i.vm_status 1 %}
+                                <label class="label label-default">待建</label>
+                                {% endifequal%}
+                                {% ifequal i.vm_status 2 %}
+                                <label class="label label-primary">使用中</label>
+                                {% endifequal%}
+                                {% ifequal i.vm_status 3 %}
+                                <label class="label label-success">停线</label>
+                                {% endifequal%}				
+
+
+				</h4> </td>
+                                <td><h4>{{ i.messages }}</h4> </td>
+                                </tr>
+
+
+                                </tbody>
+                                {% endfor %}
+                        </table>
+                </div>
+		<div class="content-toolbar btn-toolbar pull-left clearfix">
+                   <tr class="active"><button  class="btn btn-primary btn-sm" type="button" onclick="{location.href='/TASK/admin/taskadd/'}"/><span class="glyphicon glyphicon-plus"></span>Add</button></tr>
+		   {% if perms.auth.delete_user %}
+                  <tr class="active"><button id="Button1" name="delete" class="btn btn-danger btn-sm" type="submit"><span class="glyphicon glyphicon-trash"></span> Delete</button></tr>
+			{% endif %}
+                </div>
+                </form>
+                        <ul class="pagination">
+                        <li > {% if pages.has_previous %}
+                        <a href="?page={{ pages.previous_page_number }}">上一页</a>
+                        {% endif %}</li>
+                        <li class="active"><a>第{{ pages.number }}页<span class="sr-only">(current)</span></a></li>
+                        <li><a>共{{ pages.paginator.num_pages }}页</a></li>
+                        <li > {% if pages.has_next %}
+                        <a href="?page={{ pages.next_page_number }}">下一页</a>
+                        {% endif %}</li>
+                        </ul>
+                {% else %}
+		<div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>列表为空  <a href="/TASK/admin/taskadd/" class="alert-link">新建任务</a></strong>
+                </div>
+
+                {% endif %}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	{% else %}
+
+	you no have permission
+	
+	{% endif %}
+	
+
+
+
+
+
+
+
+	{% endblock %}
+
+
+	{% block footer %}
+      {% endblock %}
+
+	</body>
+</html>

@@ -1,0 +1,110 @@
+{% extends "baseadmin.html" %}
+{% load url from future %}
+<html>
+  <head>
+	{% block head %} {% endblock %}
+  </head>
+  <body>
+   {% block content %}
+   {% endblock %}
+	{% block files %}
+	
+	
+
+	{% if perms.auth.add_user %} 
+		<ol class="breadcrumb">
+                <li><a href="/TASK/admin/index/">Home</a></li>
+                <li><a href="#">添加用户</a></li>
+                <li class="active">Data</li>
+
+           </ol>
+		{% if result %}
+		<div class="alert alert-warning alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  		<strong>{{result}}</strong> 
+		</div>
+		{% endif %}
+
+		<form action="" method="post"  >{% csrf_token %}
+			  <table class="table table-condensed">
+                <thead>
+                <th class="col-xs-1"></th>
+                <th></th>
+                <th></th>
+
+                </thead>
+                <tbody>
+                <tr>
+                <td class="col-xs-2" >{{form.username.label}}</td>
+                <td class="col-xs-3" >{{form.username}}</td>
+                <td class="col-xs-6">{{form.username.errors}}</td>
+                </tr>
+                <tr>
+                <td class="col-xs-2" >{{form.password.label}}</td>
+                <td class="col-xs-3" >{{form.password}}</td>
+                <td class="col-xs-6">{{form.password.errors}}</td>
+                </tr>
+		<tr>
+		<td class="col-xs-2" >{{form.first_name.label}}</td>
+                <td class="col-xs-3" >{{form.first_name}}</td>
+                <td class="col-xs-6">{{form.first_name.errors}}</td>
+                </tr>
+		<tr>
+		<td class="col-xs-2" >{{form.last_name.label}}</td>
+                <td class="col-xs-3" >{{form.last_name}}</td>
+                <td class="col-xs-6">{{form.last_name.errors}}</td>
+                </tr>
+		 <tr>
+                <td class="col-xs-2" >{{form.email.label}}</td>
+                <td class="col-xs-3" >{{form.email}}</td>
+                <td class="col-xs-6">{{form.email.errors}}</td>
+                </tr>
+		 <tr>
+                <td class="col-xs-2" >{{form.is_staff.label}}</td>
+                <td class="col-xs-3" >{{form.is_staff}}</td>
+                <td class="col-xs-6">{{form.is_staff.errors}}</td>
+                </tr>
+		  <tr>
+                <td class="col-xs-2" >{{form.is_active.label}}</td>
+                <td class="col-xs-3" >{{form.is_active}}</td>
+                <td class="col-xs-6">{{form.is_active.errors}}</td>
+                </tr>
+		   <tr>
+                <td class="col-xs-2" >{{form.user_permissions.label}}</td>
+                <td class="col-xs-5" >{{form.user_permissions}}</td>
+                <td class="col-xs-4">{{form.user_permissions.errors}}</td>
+                </tr>
+		
+
+                </tbody>
+                </table><hr><br>
+		<td><button  class="btn btn-primary btn-sm" type="submit" ></span>提交</button></td>
+
+		</form>
+
+
+
+
+
+
+	{% else %}
+
+	you no have permission
+	
+	{% endif %}
+	
+
+
+
+
+
+
+
+	{% endblock %}
+
+
+	{% block footer %}
+      {% endblock %}
+
+	</body>
+</html>

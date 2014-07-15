@@ -1,0 +1,203 @@
+{% extends "baseadmin.html" %}
+{% load url from future %}
+<html>
+  <head>
+	{% block head %} {% endblock %}
+  </head>
+  <body>
+   {% block content %}
+   {% endblock %}
+	{% block files %}
+	
+	
+
+	{% if perms.TASK.change_task or perms.TASK.add_task or perms.TASK.delete_task%}
+		<div class="col-md-12">
+
+		<ol class="breadcrumb">
+                <li><a href="/TASK/admin/index/">Home</a></li>
+                <li><a href="#">任务列表</a></li>
+                <li class="active">Data</li>
+           	</ol>
+		</div>
+
+
+
+		<div class="col-md-12">
+		<form action="" method="post"  >{% csrf_token %}
+
+		<div class="alert alert-success" role="alert">
+				<div class="col-md-12">	<td></td><td>{{task.vmusage}}</td></div>
+				<div class="col-md-6">
+				<p align="left">发布者:{{task.fromuser}}</p>
+				<p align="left">发布时间:{{task.current_time|date:"Y-m-d H:s"}}</p>
+				<p align="left">完成时间:{{task.completion_time|date:"Y-m-d H:s"}}</p>
+					</div>
+				<div class="col-md-6">
+                                <p align="left">接收者:{{task.touser}}</p>
+                                <p align="left">紧急状态:
+				{% ifequal task.demand_status 1 %}<span class="label label-info"> 不急</span>{% endifequal %} 
+				{% ifequal task.demand_status 2 %}<span class="label label-warning"> 很急</span>{% endifequal %} 
+				{% ifequal task.demand_status 3 %}<span class="label label-danger"> 紧急</span>{% endifequal %} 
+					</p>
+                                <p align="left">资源启动时间:{{task.vmstarttime|date:"Y-m-d H:s"}}</p>
+                                	</div>
+			
+				<div class="col-md-12">
+					<table class="table table-condensed" style="color:#3c763d;">
+					<thead>
+					<tr>
+					<th>vmcpu核数</th>
+					<th>vm内存(G)</th>
+					<th>vm磁盘(G)</th>
+					<th>vmip地址</th>
+					<th>vm使用周期(月)</th>
+					</tr></thead>
+					<tbody>
+					<tr>
+					<td>{{task.vm_cpu_core}}</td>
+					<td>{{task.vm_mem}}</td>
+					<td>{{task.vm_disk}}</td>
+					<td>{{task.vm_ip}}</td>
+					<td>{{task.vm_life_cycle}}</td></tr>
+					</tbody>
+					</table>
+				
+
+
+					</div>
+
+
+	
+			 <div class="col-md-12">
+			<div class="progress">
+  			<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" {% ifequal task.task_status 1 %} style="width: 10%" {% endifequal%} {% ifequal task.task_status 2 %}style="width: 50%"{% endifequal%} {% ifequal task.task_status 3 %} style="width: 100%" {% endifequal%}>
+    		<span class="sr-only">{% ifequal task.task_status 1%}10% Complete (success){% endifequal%}{% ifequal task.task_status 2%}50% Complete (success){% endifequal%}{% ifequal task.task_status 3%}100% Complete (success){% endifequal%}</span></div>
+			</div>	</div>
+
+
+			<p style="width: 10%">
+			{% ifequal task.task_status 1%}<span class="label label-default"> 等待处理</span><input class="hide" type="text" name="task_status" value=2>{% endifequal%}	
+			{% ifequal task.task_status 2%}<span class="label label-default"> 处理中</span> <input type="text" class="hide" name="task_status" value=3>{% endifequal%}
+			{% ifequal task.task_status 3%}<span class="label label-default">处理完成</span>{% endifequal%}</p>
+
+
+				<div class="row" align="left">
+				{% ifequal task.task_status 1 %}
+					{% ifequal name task.touser%}
+					<div class="col-md-12"><button type="submit" name="accept" class="btn btn-primary btn-sm">接受任务</button></div>
+					{% endifequal %}
+				{% endifequal%}
+				{% ifequal task.task_status 2 %}
+					{% ifequal name task.touser%}
+					<div class="col-md-12">
+					<div class="col-md-12">
+                                <button type="submit" name="accept" class="btn btn-primary btn-sm">完成任务</button></div>
+					<div class="col-md-12"><br></div>
+					<div class="col-xs-2"><p>请选择资源状态:</p></div>
+					<div class="col-xs-2">
+					<select class="form-control" name="vm_status" required>
+					<option value="" selected="selected" >请选择</option>
+  					<option value="1">待建</option>
+  					<option value="2">使用中</option>
+  					<option value="3">停线</option>
+					</select>	</div><p>当前资源状态为:
+				{% ifequal task.vm_status 1 %}
+                                <label class="label label-danger">待建</label>
+                                {% endifequal%}
+                                {% ifequal task.vm_status 2 %}
+                                <label class="label label-danger">使用中</label>
+                                {% endifequal%}
+                                {% ifequal task.vm_status 3 %}
+                                <label class="label label-danger">停线</label>
+                                {% endifequal%}                         
+
+
+
+
+					</p></div>
+                                	{% endifequal%}
+                                {% endifequal%}
+		 </form>  </div></div> <br><hr>
+
+
+
+
+		<div class="col-md-12">
+		{% if check %}
+		   {% if pages %}
+			     {% for i in pages %}
+			<p align="left"><span class="label label-info">{{i.id}}#</span>&nbsp; &nbsp;<span class="label label-success">来自:{{i.fromuser}}</span>&nbsp; &nbsp;<span class="label label-warning">时间:{{i.reply_time|date:"Y-m-d H:s"}}</span></p>
+			<p align="left">{{ i.content}}</p><hr>
+				{% endfor %} 
+			 <ul class="pagination">
+                        	<li > {% if pages.has_previous %}<a href="?page={{ pages.previous_page_number }}">上一页</a>{% endif %}</li>
+                        	<li class="active"><a>第{{ pages.number }}页<span class="sr-only">(current)</span></a></li>
+                        	<li><a>共{{ pages.paginator.num_pages }}页</a></li>
+                        	<li > {% if pages.has_next %}<a href="?page={{ pages.next_page_number }}">下一页</a>{% endif %}</li>
+                        </ul>
+		   {% endif %}
+		{% endif %}
+		</div>
+
+
+
+			{% if check  %}
+			<div class="col-md-12">
+			<form action="" method="post"  >{% csrf_token %}
+				<p class="col-md-12" align="left">回复:</p>
+		
+                		<p class="col-md-6"><textarea style="resize:none" rows="6" name="messages" id="id_messages" cols="6" class="form-control" required></textarea></p><br><p class="col-md-12" align="left"></p>
+
+				<p class="col-md-6" align="left"><button type="submit" name="content" class="btn btn-primary btn-sm">提交</button></p>
+				<br>
+				
+                	</form>
+			</div>
+			{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	{% else %}
+
+	you no have permission
+	
+	{% endif %}
+	
+
+
+
+
+
+
+
+	{% endblock %}
+
+
+	{% block footer %}
+      {% endblock %}
+
+	</body>
+</html>

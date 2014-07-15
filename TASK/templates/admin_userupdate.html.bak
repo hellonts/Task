@@ -1,0 +1,171 @@
+{% extends "baseadmin.html" %}
+{% load url from future %}
+<html>
+  <head>
+	{% block head %} {% endblock %}
+    {% block title %}<title>Sign in Twitter Bootstrap</title>{% endblock %}
+  </head>
+  <body>
+   {% block content %}
+   {% endblock %}
+	{% block files %}
+	
+	
+
+	{% if perms.user %}
+		<form action="" method='post'>
+		<ol class="breadcrumb">
+                <li><a href="/TASK/admin/index/">Home</a></li>
+                <li><a href="#">修改用户</a></li>
+                <li class="active">Data</li>
+
+           </ol>
+		<table class="table table-condensed">
+		<thead>
+		<th class="col-xs-1"></th>
+		<th></th>
+		<th></th>
+		
+		</thead>
+		<tbody>
+		<tr>
+		<td class="col-xs-2">{{form.username.label}}</td>
+		<td class="col-xs-3">{{form.username}}</td>
+		<td class="col-xs-5">{{form.username.errors}}</td>
+		</tr>
+		
+		</tbody>
+		</table>
+
+		
+		<table class="table table-condensed">
+		<thead>
+		<tr>	
+		<th class="col-xs-1">联系方式</th>
+		<th></th>
+		<th></th>
+		</tr>
+		</thead>
+                <tbody>
+                <tr>
+                <td class="col-xs-2">{{ form.first_name.label }}</td>
+                <td class="col-xs-3">{{form.first_name}}</td>
+                <td class="col-xs-5">{{form.first_name.errors}}</td>
+                </tr>
+                 <tr>
+                <td class="col-xs-2">{{ form.last_name.label }}</td>
+                <td class="col-xs-3">{{ form.last_name }}</td>
+                <td class="col-xs-5">{{ form.last_name.errors }}</td>
+                </tr>
+
+		  <tr>
+                <td class="col-xs-2">{{ form.email.label }}</td>
+                <td class="col-xs-3">{{ form.email }}</td>
+                <td class="col-xs-5">{{ form.email.errors }}</td>
+                </tr>
+                </tbody>
+                </table>
+		
+		<table class="table table-condensed">
+                <thead>
+                <tr>
+                <th class="col-xs-1">权限</th>
+                <th></th>
+                <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td class="col-xs-2">{{ form.is_staff.label }}</td>
+                <td class="col-xs-3">{{form.is_staff}}</td>
+                <td class="col-xs-5">{{form.is_staff.help_text}}</td>
+                </tr>
+                 <tr>
+                <td class="col-xs-2">{{ form.is_active.label }}</td>
+                <td class="col-xs-3">{{ form.is_active }}</td>
+                <td class="col-xs-5">{{ form.is_active.help_text }}</td>
+                </tr>
+
+                  <tr>
+                <td class="col-xs-2">{{ form.is_superuser.label }}</td>
+                <td class="col-xs-3">{{ form.is_superuser }}</td>
+                <td class="col-xs-5">{{ form.is_superuser.errors }}</td>
+                </tr>
+		 </tr>
+
+                  <tr>
+                <td class="col-xs-1"></td>
+                <td class="col-xs-8">
+		<div>
+		<script type="text/javascript">addEvent(window, "load", function(e) {SelectFilter.init("id_user_permissions", "用户权限", 0, "/static/admin/"); });</script>
+		<div class="col-xs-4" style="float:left,width:270px,test-align:center,margin-bottom:5px">
+<h2>可用 用户权限 <img src="/static/admin/img/icon-unknown.gif" width="10" height="10" class="help help-tooltip" title=""></h2>
+		<p id="id_user_permissions_filter"><label for="id_user_permissions_input"><img src="/static/admin/img/selector-search.gif" class="help-tooltip" alt="" title="Type into this box to filter down the list of available 用户权限."></label><input  type="text" placeholder="过滤" id="id_user_permissions_input" class="form-control"></p>
+	
+		<select multiple="multiple" class="form-control" name="user_permissions_old" id="id_user_permissions_from" style="height: 236px;">
+		{% for i in permiss %}
+		<option value='{{i.name}}'>{{ i.name }}</option>
+		{% endfor %}                           
+		</select><br>
+		<a title="点击选择全部用户权限。" href="javascript: (function(){ SelectBox.move_all("id_user_permissions_from", "id_user_permissions_to"); SelectFilter.refresh_icons("id_user_permissions");})()" id="id_user_permissions_add_all_link" class="selector-chooseall active">全选</a></div>
+		
+
+		<div class="col-xs-2"style="text-align:center;padding-top:100px;width:20px,height:100px,">
+		<ul>
+		<li><a title="选择"  title="选择" href="javascript: (function(){ SelectBox.move('id_user_permissions_from','id_user_permissions_to'); SelectFilter.refresh_icons('id_user_permissions');})()" id="id_user_permissions_add_link" class="selector-add">选择</a></li>
+		<li><a title="删除" href='javascript: (function(){ SelectBox.move("id_user_permissions_to","id_user_permissions_from"); SelectFilter.refresh_icons("id_user_permissions");})()' id="id_user_permissions_remove_link" class="selector-remove">删除</a></li></ul></div>
+		
+		<div class="col-xs-4" style="padding-top:65px;height: 270px;width:270px,">
+		<h2>选中的 用户权限 <img src="/static/admin/img/icon-unknown.gif" width="10" height="10" class="help help-tooltip" title="这是已选用户权限的列表。你可以"></h2>
+		<select id="id_user_permissions_to" multiple="multiple" size="0" name="user_permissions" class="form-control" style="height: 236px;">
+		{% for i in permissions %}
+		<option value='{{i.name}}'>{{ i.name }}</option>
+		{% endfor %}</select>
+		<br>
+	        <a title="删除所有选择的用户权限。" href="javascript: (function() { SelectBox.move_all('id_user_permissions_to', 'id_user_permissions_from'); SelectFilter.refresh_icons('id_user_permissions');})()" id="id_user_permissions_remove_all_link" class="selector-clearall active">删除全部</a></div>
+
+
+ 		</div>
+		</td>
+		<td class="col-xs-3" ></td>
+                </tr>
+                </tbody>
+                </table>
+
+
+	</div>
+<script type="text/javascript">
+(function($) {
+    var field;
+
+
+})(django.jQuery);
+</script>
+
+
+
+
+		
+
+		</form>
+	{% else %}
+
+	you no have permission
+	
+	{% endif %}
+	
+
+
+
+
+
+
+
+	{% endblock %}
+
+
+	{% block footer %}
+      {% endblock %}
+
+	</body>
+</html>
